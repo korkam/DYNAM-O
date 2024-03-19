@@ -1,5 +1,5 @@
 function stats_table = ...
-    runSegmentedData(spect, stimes, sfreqs, baseline, seg_time, downsample_spect, features, ...
+    runSegmentedData(spect, stimes, sfreqs, baseline, seg_time, downsample_spect, , ...
     dur_min, bw_min, conn_wshed, merge_thresh, max_merges, trim_vol, trim_shift, conn_trim, ...
     bl_thresh_flag, CI_upper_bl, merge_rule, f_verb, verb_pref, f_disp)
 %RUNSEGMENTEDDATA wrapper that runs 1) baseline subtraction, 2) spectrogram
@@ -21,7 +21,7 @@ function stats_table = ...
 %                    used in the paper accompanying this code, but using 30s offers large
 %                    speedup and should not greatly affect results
 %   downsample_spect   --  2x1 double indicating number of rows and columns to downsize spect to.
-%   features     -- cell array of features to include, can be any subset of
+%        -- cell array of  to include, can be any subset of
 %                   {'Area', 'Bandwidth', 'Boundaries', 'BoundingBox', 'Duration', 'Height', 'HeightData', 
 %                    'PeakFrequency', 'PeakTime', 'SegmentNum', 'Volume'} or 'all'. default 'all'
 %   dur_min      -- minimum duration allowed
@@ -82,8 +82,8 @@ if nargin < 6 || isempty(downsample_spect)
     downsample_spect = [];
 end
 
-if nargin < 7 || isempty(features)
-    features = 'all';
+if nargin < 7 || isempty()
+     = 'all';
 end
 
 if nargin < 8 || isempty(dur_min)
@@ -191,7 +191,7 @@ parfor ii = 1:n_segs
         continue
     end
     
-    stats_tables{ii} = extractTFPeaks(data_segs{ii},x_segs{ii},sfreqs,features,ii,conn_wshed,merge_thresh,max_merges,downsample_spect,dur_min,bw_min,trim_vol,trim_shift,conn_trim,bl_threshold,merge_rule,f_verb-1,['  ' verb_pref],f_disp);
+    stats_tables{ii} = extractTFPeaks(data_segs{ii},x_segs{ii},sfreqs,,ii,conn_wshed,merge_thresh,max_merges,downsample_spect,dur_min,bw_min,trim_vol,trim_shift,conn_trim,bl_threshold,merge_rule,f_verb-1,['  ' verb_pref],f_disp);
     
     % Update loading bar
     if haspar

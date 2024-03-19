@@ -16,7 +16,7 @@
 
 %% PATH SETTINGS
 % Add necessary functions to path
-addpath(genpath('./toolbox'))
+addpath(genpath('D:\Github_local\DYNAM-O'))
 
 %% DATA SETTINGS
 %Location of example data
@@ -48,7 +48,7 @@ SOpower_norm_method = 'p5shift';
 %or select from:
 %features = {'Area', 'Bandwidth', 'Boundaries', 'BoundingBox', 'Duration', 'Height', 'HeightData',...
 %            'PeakFrequency', 'PeakTime', 'SegmentNum', 'Volume'}
-features = {'BoundingBox', 'Area', 'Bandwidth', 'Duration', 'Height', 'PeakFrequency', 'PeakTime', 'Volume'};
+metrics = {'BoundingBox', 'Area', 'Bandwidth', 'Duration', 'Height', 'PeakFrequency', 'PeakTime', 'Volume'};
 
 %Stages in which to restrict the SOPHs.
 stages_include = [1,2,3,4];
@@ -94,7 +94,7 @@ ttotal = datetime('now');
 % control of watershed extraction of Time-Frequency Peaks
 
 [stats_table, spect, stimes, sfreqs, data_trunc, t_data, artifacts]= computeTFPeaks(data, Fs, stage_vals, stage_times,...
-    'time_range', time_range, 'features', features, 'quality_setting', quality_setting);
+    'time_range', time_range, 'features', metrics, 'quality_setting', quality_setting);
 
 %% COMPUTE SO-POWER/PHASE HISTOGRAMS
 % See SOpowerphaseHistogram() for a full list of optional arguments for

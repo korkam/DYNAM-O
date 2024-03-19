@@ -17,8 +17,8 @@ function [stats_table, spect, stimes, sfreqs, data_trunc, t_data_trunc, artifact
 %       time_range (opt):          [1x2] double - section of EEG to use in analysis
 %                                  (seconds). Default = [min(t_data), max(t_data)]
 %       downsample_spect(opt):     2x1 double indicating number of rows and columns to downsize spect to
-%       features (opt):            [1xf] char or cell array of char -
-%                                  features to be extracted from each peak region. Can be any subset of
+%       metrics (opt):            [1xf] char or cell array of char -
+%                                  metrics to be extracted from each peak region. Can be any subset of
 %                                  {'Area', 'Bandwidth', 'Boundaries', 'BoundingBox', 'Duration', 'Height', 'HeightData', 
 %                                   'PeakFrequency', 'PeakTime', 'SegmentNum', 'Volume'} or 'all'. Default = 'all'
 %       artifacts (opt):           [1xn] logical - boolean indicating artifact time points. Default = [], run detect_artifacts()
@@ -66,7 +66,7 @@ addRequired(p, 'stage_times', @(x) validateattributes(x, {'numeric', 'vector'}, 
 addOptional(p, 't_data', [], @(x) validateattributes(x,{'numeric', 'vector'},{'real','finite','nonnan'}));
 addOptional(p, 'time_range', [], @(x) validateattributes(x,{'numeric', 'vector'},{'real','finite','nonnan'}));
 addOptional(p, 'downsample_spect', [],  @(x) validateattributes(x,{'numeric', 'vector'},{'real','finite','nonnan'}));
-addOptional(p, 'features', 'all',  @(x) validateattributes(x,{'char', 'cell'},{}));
+addOptional(p, 'metrics', 'all',  @(x) validateattributes(x,{'char', 'cell'},{}));
 addOptional(p, 'artifacts', [], @(x) validateattributes(x,{'logical'},{'real','finite','nonnan'}));
 addOptional(p, 'artifact_filters', [], @(x) validateattributes(x,{'struct'},{}));
 addOptional(p, 'stages_include', [1,2,3,4], @(x) validateattributes(x,{'numeric', 'vector'}, {'real', 'nonempty'}))
@@ -194,7 +194,7 @@ if verbose
     tfp = datetime('now');
 end
 
-stats_table = runSegmentedData(spect, stimes, sfreqs, baseline, seg_time, downsample_spect, features, dur_min, bw_min, [], merge_thresh);
+stats_table = runSegmentedData(spect, stimes, sfreqs, baseline, seg_time, downsample_spect, metrics, dur_min, bw_min, [], merge_thresh);
 
 if verbose
     disp(['TF-peak extraction took ' char(datetime('now')-tfp), newline]);
